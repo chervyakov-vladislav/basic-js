@@ -81,7 +81,7 @@ class VigenereCipheringMachine {
       } else result.push(message[i])
     }
 
-    if (this.isReverse) return result.split('').reverse().join('');
+    if (this.isReverse) return result.reverse().join('');
     
     return result.join('')
   }
@@ -91,13 +91,27 @@ class VigenereCipheringMachine {
     key = key.toUpperCase();
     message = message.toUpperCase().trim();
 
-    let result;
+    let tmpIndex = 0;
+    let result = [];
 
+    for (let i = 0; i < message.length; i++) {
+      if (alphabet[0].includes(message[i])) {
+        let indexKey = alphabet[0].indexOf(key[tmpIndex]);
+        tmpIndex++;
+        if (!key[tmpIndex]) tmpIndex = 0;
+        let module = alphabet[0].length;
+        let indexMessage = alphabet[0].indexOf(message[i])
+        let valueIndex = ((indexMessage - indexKey) % module > 0) ? (indexMessage - indexKey) : (indexMessage - indexKey + module) % module
+        result.push(alphabet[0][valueIndex]);
+
+
+      } else result.push(message[i])
+    }
     
     
-    if (this.isReverse) return result.split('').reverse().join('');
+    if (this.isReverse) return result.reverse().join('');
     
-    return result
+    return result.join('')
   }
 }
 
@@ -113,11 +127,11 @@ const reverseMachine = new VigenereCipheringMachine(false);
 
 console.log(directMachine.encrypt('attack at dawn!', 'alphonse'))// => 'AEIHQX SX DLLU!');
 
-// console.log(directMachine.decrypt('AEIHQX SX DLLU!', 'alphonse'))// => 'ATTACK AT DAWN!');
+console.log(directMachine.decrypt('AEIHQX SX DLLU!', 'alphonse'))// => 'ATTACK AT DAWN!');
 
-// console.log(reverseMachine.encrypt('attack at dawn!', 'alphonse'))// => '!ULLD XS XQHIEA');
+console.log(reverseMachine.encrypt('attack at dawn!', 'alphonse'))// => '!ULLD XS XQHIEA');
 
-// console.log(reverseMachine.decrypt('AEIHQX SX DLLU!', 'alphonse'))// => '!NWAD TA KCATTA');
+console.log(reverseMachine.decrypt('AEIHQX SX DLLU!', 'alphonse'))// => '!NWAD TA KCATTA');
 
 
 // attack at dawn!
