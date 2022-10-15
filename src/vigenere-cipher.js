@@ -19,17 +19,64 @@ const { NotImplementedError } = require('../extensions/index.js');
  * reverseMachine.decrypt('AEIHQX SX DLLU!', 'alphonse') => '!NWAD TA KCATTA'
  * 
  */
+
+let alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'G', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  constructor(isDirect = true) {
+    this.isReverse = isDirect ? false : true;
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  encrypt(message, key) {
+    if (!message || !key) throw new Error('Incorrect arguments!');
+
+    key.toUpperCase();
+    message.toUpperCase().trim();
+
+    let result;
+
+    if (this.isReverse) return result.split('').reverse().join('');
+    
+    return result
+  }
+  decrypt(message, key) {
+    if (!message || !key) throw new Error('Incorrect arguments!');
+
+    key.toUpperCase();
+    message.toUpperCase().trim();
+
+    let result;
+
+    if (this.isReverse) return result.split('').reverse().join('');
+    
+    return result
   }
 }
 
 module.exports = {
   VigenereCipheringMachine
 };
+
+
+
+// const directMachine = new VigenereCipheringMachine();
+
+// const reverseMachine = new VigenereCipheringMachine(false);
+
+// console.log(directMachine.encrypt('attack at dawn!', 'alphonse'))// => 'AEIHQX SX DLLU!');
+
+// console.log(directMachine.decrypt('AEIHQX SX DLLU!', 'alphonse'))// => 'ATTACK AT DAWN!');
+
+// console.log(reverseMachine.encrypt('attack at dawn!', 'alphonse'))// => '!ULLD XS XQHIEA');
+
+// console.log(reverseMachine.decrypt('AEIHQX SX DLLU!', 'alphonse'))// => '!NWAD TA KCATTA');
+
+
+// attack at dawn!
+// alphon ea phon
+// AEIHQX SX DLLU!
+
+// AEIHQX SX DLLU!
+// alphon ea phon
+// ATTACK AT DAWN!
