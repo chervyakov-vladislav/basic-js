@@ -18,22 +18,24 @@ class DepthCalculator {
     this.arrCounter = 0;
     this.tmpDepth = 1;
     this.arr = [];
-    this.tmpArr = [];
+    this.tmp = [];
   }
 
   calculateDepth(arr) {
 
-    this.tmpDepth = 1;
-    for (let i = 0; i < arr.length; i++) {
-      if (Array.isArray(arr[i])) {
-        //this.arrCounter++;
-        this.depth++;
-        this.tmpArr = arr[i].flat();
-        this.calculateDepth(this.tmpArr);
-      } 
+    this.depth = 1;
+    // console.log(this.nestedArray(arr))
+    if (this.nestedArray(arr)) {
+      this.tmp = arr.flat();
+      return this.depth + this.calculateDepth(this.tmp);
+    } 
       
-    }
+    
     return this.depth
+  }
+
+  nestedArray(arr) {
+    return arr.some(item => Array.isArray(item)) ? true : false
   }
 }
 
